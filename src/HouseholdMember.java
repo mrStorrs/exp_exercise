@@ -1,14 +1,30 @@
+import java.util.HashMap;
+
 public class HouseholdMember {
     private Household household;
     private String firstName;
     private String lastName;
     private int age;
+    private String id;
 
-    public HouseholdMember(Household household, String firstName, String lastName, int age) {
+    //making a hashmap to hold objects(value) by their id(key)
+    private static HashMap<String, HouseholdMember> members = new HashMap<String, HouseholdMember>();
+
+    public HouseholdMember(Household household, String firstName, String lastName, int age, String id) {
+        //check if member exists
+        try{
+            if (members.containsKey(id)){
+                throw new IllegalArgumentException("Sorry, the member you are trying to add already belongs to this household.");
+            }
+        } catch (IllegalArgumentException e){
+            System.out.println(e);
+        }
+
         this.household = household;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+
     }
 
     public Household getHousehold() {
@@ -42,4 +58,5 @@ public class HouseholdMember {
     public void setAge(int age) {
         this.age = age;
     }
+
 }

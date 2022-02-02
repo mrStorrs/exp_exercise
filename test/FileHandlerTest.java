@@ -36,9 +36,5 @@ class FileHandlerTest {
         FileHandler a = new FileHandler("./input/INPUT.txt", true);
         a.readFile();
         a.writeHouseholds();
-
-        ArrayList<String> test = new ArrayList<>();
-        test.add("a");
-        test.add("b");
     }
 }

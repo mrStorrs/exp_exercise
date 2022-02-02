@@ -1,3 +1,4 @@
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -7,15 +8,12 @@ public class Household {
     private String state;
     private String city;
     private Boolean DEBUG;
-    private ArrayList<HouseholdMember> members = new ArrayList<HouseholdMember>();
 
-    //this will hold the id of all instances of this class.
-    private static ArrayList<String> instances = new ArrayList();
+    //this will hold all the members of a particular household
+    private HashMap<String, HouseholdMember> members = new HashMap<>();
 
     //making a hashmap to hold objects(value) by their id(key)
     private static HashMap<String, Household> households = new HashMap<String, Household>();
-
-
 
     /**
      *
@@ -33,7 +31,7 @@ public class Household {
         this.state = state;
         this.id = id;
 
-        instances.add(id);
+//        instances.add(id);
         households.put(id, this);
 
         if(DEBUG){
@@ -70,26 +68,23 @@ public class Household {
         return this.id;
     }
 
-    public ArrayList<HouseholdMember> getPeople() {
-        return members;
-    }
-
-    public void addMember(String firstName, String lastName, int age ) {
-        HouseholdMember memberObj = new HouseholdMember(this, firstName, lastName, age);
-        members.add(memberObj);
+    public void addMember(String firstName, String lastName, int age, String id ) {
+        HouseholdMember memberObj = new HouseholdMember(this, firstName, lastName, age, id);
+        this.members.put(id, memberObj);
 
         if(this.DEBUG){
             System.out.println("Adding Household member: " + lastName + ", " + firstName + ". To household: " + this.id);
         }
     }
 
+    public HashMap<String, HouseholdMember> getMembers(){
+        return this.members;
+    }
+
     public static HashMap<String, Household> getHouseholds(){
         return households;
     }
-    public static ArrayList<String> getInstances() {
-        return instances;
 
-    }
 
 
 

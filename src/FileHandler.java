@@ -90,19 +90,25 @@ public class FileHandler {
             int age = Integer.parseInt(householdArr.get(5));
 
             //move this to its own method later! creating id to check if household exists.
-            String id =
+            String householdID =
                     state.replaceAll("\\p{Punct}", "").toLowerCase()
                     + city.replaceAll("\\p{Punct}", "").toLowerCase()
                     + street.replaceAll("\\W", "").toLowerCase();
 
+            //move this to its own method later! creating id to check if household exists.
+            String memberID =
+                    last.replaceAll("\\p{Punct}", "").toLowerCase()
+                            + first.replaceAll("\\p{Punct}", "").toLowerCase()
+                            + Integer.toString(age);
+
             //figure out if household exists, then act accordingly
-            if(!households.containsKey(id)){ //no household found create a new one.
+            if(!households.containsKey(householdID)){ //no household found create a new one.
                 //dynamically add new household.
-                Household householdObj = new Household(street, city, state, id, this.DEBUG);
-                householdObj.addMember(first, last, age); //add member to newly created household
+                Household householdObj = new Household(street, city, state, householdID, this.DEBUG);
+                householdObj.addMember(first, last, age, memberID); //add member to newly created household
                 households = Household.getHouseholds(); //re-pull modified Household hashmap.
             } else { //add member to outstanding household
-                households.get(id).addMember(first,last,age);
+                households.get(householdID).addMember(first,last,age, memberID);
             }
 
 
