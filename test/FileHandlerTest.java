@@ -20,14 +20,13 @@ class FileHandlerTest {
     }
 
     @org.junit.jupiter.api.Test
-    void readFile() throws FileNotFoundException {
+    void readFile() {
         FileHandler a = new FileHandler("./input/test.txt");
         a.readFile();
-        assertEquals("HelloExpeditors", a.getRawInput().get(0).toString());
+        assertEquals("HelloExpeditors", a.getRawInput().get(0));
     }
 
     @Test
     void getRawInput() {
-        //blank for now since the readFile() Test accomplishes this portion of the test.
     }
 }

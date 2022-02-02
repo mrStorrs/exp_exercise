@@ -8,11 +8,18 @@ public class FileHandler {
     private int id;
     private static int unique_id;
     private ArrayList<String> rawInput = new ArrayList<String>();
-    private Boolean DEBUG = true;
+    private Boolean DEBUG;
 
     public FileHandler(String path){
         this.setPath(path);
+        this.DEBUG = false;
     }
+
+    public FileHandler(String path, Boolean DEBUG){
+        this.setPath(path);
+        this.DEBUG = true;
+    }
+
 
     public void setPath(String path) {
         this.path = path;
