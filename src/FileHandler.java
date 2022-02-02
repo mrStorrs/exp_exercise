@@ -9,9 +9,6 @@ public class FileHandler {
     private ArrayList<String> rawInput = new ArrayList<String>();
     private Boolean DEBUG;
 
-    //this will hold all the households after they are cleaned from all files.
-    private static ArrayList<Household> households = new ArrayList<>();
-
     public FileHandler(String path){
         this.setPath(path);
         this.DEBUG = false;
@@ -21,7 +18,6 @@ public class FileHandler {
         this.setPath(path);
         this.DEBUG = true;
     }
-
 
     public void setPath(String path) {
         this.path = path;
@@ -63,14 +59,17 @@ public class FileHandler {
         return this.rawInput;
     }
 
+    /**
+     * Logic for dealing with data that has been read. This will determine whether new Households
+     * need to be created and where to add new members to said households.
+     */
     public void writeHouseholds(){
-        //retrieve current households.
-//        ArrayList<String> currentHouseholds = Household.getInstances();
-        HashMap<String, Household> currentHouseholds = Household.getHouseholds();
+        //pull the current hashmap holding all households.
+        HashMap<String, Household> households = Household.getHouseholds();
 
+        //loop through the raw data and decide what to do with each line.
         for(String household : this.rawInput){
             List<String> householdArr = new ArrayList<>();
-
             //split information by beginning and end quotes
             int first_pos = -1;
             for(int i = 0; i < household.length(); i++) {
@@ -90,30 +89,20 @@ public class FileHandler {
             String state = householdArr.get(4);
             int age = Integer.parseInt(householdArr.get(5));
 
-
             //move this to its own method later! creating id to check if household exists.
             String id =
                     state.replaceAll("\\p{Punct}", "").toLowerCase()
                     + city.replaceAll("\\p{Punct}", "").toLowerCase()
                     + street.replaceAll("\\W", "").toLowerCase();
 
-            /**
-             * Although this currently works to add members to the household,
-             * It would be better to create a hashmap of the Household objects to
-             * refer to as this would work with multiple file calls.
-             */
-//            int isHousehold = currentHouseholds.indexOf(id); //looking for household.
-            if(!currentHouseholds.containsKey(id)){ //no household found create a new one.
+            //figure out if household exists, then act accordingly
+            if(!households.containsKey(id)){ //no household found create a new one.
                 //dynamically add new household.
                 Household householdObj = new Household(street, city, state, id, this.DEBUG);
-//                households.add(householdObj);
-                //pull modified hashmap of objects
-                currentHouseholds = Household.getHouseholds();
-
-                //add member to newly created household
-                householdObj.addMember(first, last, age);
+                householdObj.addMember(first, last, age); //add member to newly created household
+                households = Household.getHouseholds(); //re-pull modified Household hashmap.
             } else { //add member to outstanding household
-                currentHouseholds.get(id).addMember(first,last,age);
+                households.get(id).addMember(first,last,age);
             }
 
 
