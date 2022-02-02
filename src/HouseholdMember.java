@@ -64,4 +64,7 @@ public class HouseholdMember {
         this.age = age;
     }
 
+    public static HashMap<String, HouseholdMember> getMembers() {
+        return members;
+    }
 }
