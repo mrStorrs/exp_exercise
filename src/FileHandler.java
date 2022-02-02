@@ -65,8 +65,8 @@ public class FileHandler {
 
     public void writeHouseholds(){
         //retrieve current households.
-        System.out.println(Household.getInstances());
-        ArrayList<String> currentHouseholds = Household.getInstances();
+//        ArrayList<String> currentHouseholds = Household.getInstances();
+        HashMap<String, Household> currentHouseholds = Household.getHouseholds();
 
         for(String household : this.rawInput){
             List<String> householdArr = new ArrayList<>();
@@ -102,23 +102,22 @@ public class FileHandler {
              * It would be better to create a hashmap of the Household objects to
              * refer to as this would work with multiple file calls.
              */
-            int isHousehold = currentHouseholds.indexOf(id); //looking for household.
-            if(isHousehold == -1){ //no household found create a new one.
+//            int isHousehold = currentHouseholds.indexOf(id); //looking for household.
+            if(!currentHouseholds.containsKey(id)){ //no household found create a new one.
                 //dynamically add new household.
                 Household householdObj = new Household(street, city, state, id, this.DEBUG);
-                households.add(householdObj);
-                System.out.println("Creating new household: " + id);
+//                households.add(householdObj);
+                //pull modified hashmap of objects
+                currentHouseholds = Household.getHouseholds();
 
                 //add member to newly created household
                 householdObj.addMember(first, last, age);
-            } else { //add member to previously created household
-                households.get(isHousehold).addMember(first,last,age);
-                //add member to household here.
+            } else { //add member to outstanding household
+                currentHouseholds.get(id).addMember(first,last,age);
             }
 
 
         }
-        System.out.println(households);
 
     }
 }

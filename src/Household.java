@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Household {
     private String id;
@@ -10,6 +11,10 @@ public class Household {
 
     //this will hold the id of all instances of this class.
     private static ArrayList<String> instances = new ArrayList();
+
+    //making a hashmap to hold objects(value) by their id(key)
+    private static HashMap<String, Household> households = new HashMap<String, Household>();
+
 
 
     /**
@@ -29,11 +34,11 @@ public class Household {
         this.id = id;
 
         instances.add(id);
+        households.put(id, this);
 
         if(DEBUG){
             this.DEBUG = true;
-//            System.out.println("Adding new household: " + street + ", " + city + ", " + state);
-//            System.out.println(instances.toString());
+            System.out.println("Creating new household: " + id);
         }
     }
 
@@ -78,10 +83,14 @@ public class Household {
         }
     }
 
+    public static HashMap<String, Household> getHouseholds(){
+        return households;
+    }
     public static ArrayList<String> getInstances() {
         return instances;
 
     }
+
 
 
 }
