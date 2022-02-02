@@ -1,5 +1,5 @@
+import java.lang.reflect.Member;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Household {
     private String id;
@@ -7,7 +7,7 @@ public class Household {
     private String state;
     private String city;
     private Boolean DEBUG;
-    private ArrayList<Members> members = new ArrayList<Members>();
+    private ArrayList<Member> members = new ArrayList<Member>();
 
     //this will hold the id of all instances of this class.
     private static ArrayList<String> instances = new ArrayList();
@@ -22,17 +22,7 @@ public class Household {
      * @// TODO: 2/1/2022 add validation and input cleaning to id
      *      (Street should be st, st should be st.) etc
      */
-    public Household(String street, String city, String state, String id){
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.id = id;
 
-        instances.add(id);
-
-        //will not display debug info
-        this.DEBUG = false;
-    }
     public Household(String street, String city, String state, String id, Boolean DEBUG){
         this.street = street;
         this.city = city;
@@ -47,8 +37,6 @@ public class Household {
 //            System.out.println(instances.toString());
         }
     }
-
-
 
     public String getStreet() {
         return street;
@@ -78,11 +66,11 @@ public class Household {
         return this.id;
     }
 
-    public ArrayList<Members> getMembers() {
+    public ArrayList<Member> getMembers() {
         return members;
     }
 
-    public void setMembers(ArrayList<Members> members) {
+    public void setMembers(ArrayList<Member> members) {
         this.members = members;
     }
 
