@@ -6,19 +6,46 @@ public class Household {
     private String street;
     private String state;
     private String city;
+    private Boolean DEBUG;
     private ArrayList<Members> members = new ArrayList<Members>();
 
-    private static List instances = new ArrayList();
+    //this will hold the id of all instances of this class.
+    private static ArrayList<String> instances = new ArrayList();
 
 
-
-    public Household(String street, String city, String state){
+    /**
+     *
+     * @param street The street address of the household
+     * @param city the city the household resides in
+     * @param state the state the household resides in.
+     *
+     * @// TODO: 2/1/2022 add validation and input cleaning to id
+     *      (Street should be st, st should be st.) etc
+     */
+    public Household(String street, String city, String state, String id){
         this.street = street;
         this.city = city;
         this.state = state;
-        this.id = street + city+ state;
+        this.id = id;
 
-        instances.add(new java.lang.ref.WeakReference(this));
+        instances.add(id);
+
+        //will not display debug info
+        this.DEBUG = false;
+    }
+    public Household(String street, String city, String state, String id, Boolean DEBUG){
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.id = id;
+
+        instances.add(id);
+
+        if(DEBUG){
+            this.DEBUG = true;
+//            System.out.println("Adding new household: " + street + ", " + city + ", " + state);
+//            System.out.println(instances.toString());
+        }
     }
 
 
@@ -59,7 +86,7 @@ public class Household {
         this.members = members;
     }
 
-    public static List getInstances() {
+    public static ArrayList<String> getInstances() {
         return instances;
     }
 }

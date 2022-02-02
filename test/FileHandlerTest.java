@@ -29,4 +29,11 @@ class FileHandlerTest {
     @Test
     void getRawInput() {
     }
+
+    @Test
+    void writeHouseholds() {
+        FileHandler a = new FileHandler("./input/INPUT.txt", true);
+        a.readFile();
+        a.writeHouseholds();
+    }
 }

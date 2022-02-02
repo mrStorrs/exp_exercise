@@ -9,9 +9,8 @@ class HouseholdTest {
 
     @BeforeAll
     public static void setUp(){
-        a = new Household("123 main st.", "seattle", "wa");
+        a = new Household("123 main st.", "seattle", "wa", "0", true);
     }
-
 
     @Test
     void setStreet() { //testing for both set/get street
@@ -20,14 +19,12 @@ class HouseholdTest {
         assertEquals(exp, a.getStreet());
     }
 
-
     @Test
     void setState() {
         String exp = "changed";
         a.setState(exp);
         assertEquals(exp, a.getState());
     }
-
 
     @Test
     void setCity() {

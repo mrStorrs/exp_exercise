@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class FileHandler {
     private String path;
@@ -9,6 +8,9 @@ public class FileHandler {
     private static int unique_id;
     private ArrayList<String> rawInput = new ArrayList<String>();
     private Boolean DEBUG;
+
+    //this will hold all the households after they are cleaned from all files.
+    private static ArrayList<Household> households = new ArrayList<>();
 
     public FileHandler(String path){
         this.setPath(path);
@@ -59,5 +61,45 @@ public class FileHandler {
     }
     public ArrayList<String> getRawInput(){
         return this.rawInput;
+    }
+
+    public void writeHouseholds(){
+        //retrieve current households.
+        System.out.println(Household.getInstances());
+        ArrayList<String> currentHouseholds = Household.getInstances();
+
+        for(String household : this.rawInput){
+            //split and convert to array to be assigned. MOVE TO READ
+            List<String> householdArr = Arrays.asList(household.split(","));
+            System.out.println("householdarr: " + householdArr);
+
+            //set ids for construction of new household.
+//            String first = householdArr.get(0);
+//            String last = householdArr.get(1);
+            String street = householdArr.get(2);
+            String city = householdArr.get(3);
+            String state = householdArr.get(4);
+//            String age = householdArr.get(5);
+
+
+            //move this to its own method later! creating id
+            String id =
+                    state.replaceAll("\\p{Punct}", "").toLowerCase()
+                    + city.replaceAll("\\p{Punct}", "").toLowerCase()
+                    + street.replaceAll("\\W", "").toLowerCase();
+
+            //adding
+            if(!currentHouseholds.contains(id)){
+                //dynamically add new household.
+                Household householdObj = new Household(street, city, state, id, this.DEBUG);
+                households.add(householdObj);
+                System.out.println("Creating new household: " + id);
+
+            }
+
+
+        }
+        System.out.println(households);
+
     }
 }
