@@ -69,12 +69,14 @@ public class Household {
     }
 
     public void addMember(String firstName, String lastName, int age, String id ) {
-        HouseholdMember memberObj = new HouseholdMember(this, firstName, lastName, age, id);
-        this.members.put(id, memberObj);
 
         if(this.DEBUG){
-            System.out.println("Adding Household member: " + lastName + ", " + firstName + ". To household: " + this.id);
+            System.out.println("Attempting to add new member..");
         }
+
+        HouseholdMember memberObj = new HouseholdMember(this, firstName, lastName, age, id, DEBUG);
+        this.members.put(id, memberObj);
+
     }
 
     public HashMap<String, HouseholdMember> getMembers(){

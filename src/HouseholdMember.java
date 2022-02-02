@@ -10,21 +10,26 @@ public class HouseholdMember {
     //making a hashmap to hold objects(value) by their id(key)
     private static HashMap<String, HouseholdMember> members = new HashMap<String, HouseholdMember>();
 
-    public HouseholdMember(Household household, String firstName, String lastName, int age, String id) {
+    public HouseholdMember(Household household, String firstName, String lastName, int age, String id, Boolean DEBUG) {
         //check if member exists
         try{
             if (members.containsKey(id)){
                 throw new IllegalArgumentException("Sorry, the member you are trying to add already belongs to this household.");
+            } else {
+                this.household = household;
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.age = age;
+                this.id  = id;
+                members.put(id, this);
+
+                if(DEBUG){
+                    System.out.println("Adding Member: " + lastName + ", " + firstName + " to " + this.household.getId());
+                }
             }
         } catch (IllegalArgumentException e){
             System.out.println(e);
         }
-
-        this.household = household;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-
     }
 
     public Household getHousehold() {

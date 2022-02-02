@@ -33,7 +33,16 @@ class FileHandlerTest {
 
     @Test
     void writeHouseholds() {
+        // Test when given base input file
         FileHandler a = new FileHandler("./input/INPUT.txt", true);
+        a.readFile();
+        a.writeHouseholds();
+    }
+
+    @Test
+    void writeHouseholdsDuplicate() {
+        //test for duplicate members
+        FileHandler a = new FileHandler("./input/testDuplicate.txt", true);
         a.readFile();
         a.writeHouseholds();
     }
