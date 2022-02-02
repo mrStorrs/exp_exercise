@@ -1,10 +1,10 @@
-public class Member{
+public class HouseholdMember {
     private Household household;
     private String firstName;
     private String lastName;
-    private String age;
+    private int age;
 
-    public Member(Household household, String firstName, String lastName, String age) {
+    public HouseholdMember(Household household, String firstName, String lastName, int age) {
         this.household = household;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,11 +35,11 @@ public class Member{
         this.lastName = lastName;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 }

@@ -69,25 +69,39 @@ public class FileHandler {
         ArrayList<String> currentHouseholds = Household.getInstances();
 
         for(String household : this.rawInput){
-            //split and convert to array to be assigned. MOVE TO READ
-            List<String> householdArr = Arrays.asList(household.split(","));
-            System.out.println("householdarr: " + householdArr);
+            List<String> householdArr = new ArrayList<>();
 
-            //set ids for construction of new household.
+            //split information by beginning and end quotes
+            int first_pos = -1;
+            for(int i = 0; i < household.length(); i++) {
+                if (household.charAt(i) == '\"' && first_pos < 0) { //first pos not set. set it.
+                    first_pos = i;
+                } else if (household.charAt(i) == '\"') { //found first pos. must be second quote. split here.
+                    householdArr.add(household.substring(first_pos + 1, i));
+                    first_pos = -1; //looking for first quote again.
+                }
+            }
+
+            //set ids for construction of new household &| member
             String first = householdArr.get(0);
             String last = householdArr.get(1);
             String street = householdArr.get(2);
             String city = householdArr.get(3);
             String state = householdArr.get(4);
-            String age = householdArr.get(5);
+            int age = Integer.parseInt(householdArr.get(5));
 
 
-            //move this to its own method later! creating id
+            //move this to its own method later! creating id to check if household exists.
             String id =
                     state.replaceAll("\\p{Punct}", "").toLowerCase()
                     + city.replaceAll("\\p{Punct}", "").toLowerCase()
                     + street.replaceAll("\\W", "").toLowerCase();
 
+            /**
+             * Although this currently works to add members to the household,
+             * It would be better to create a hashmap of the Household objects to
+             * refer to as this would work with multiple file calls.
+             */
             int isHousehold = currentHouseholds.indexOf(id); //looking for household.
             if(isHousehold == -1){ //no household found create a new one.
                 //dynamically add new household.
@@ -95,9 +109,10 @@ public class FileHandler {
                 households.add(householdObj);
                 System.out.println("Creating new household: " + id);
 
-                //add member to household here
-
-            } else {
+                //add member to newly created household
+                householdObj.addMember(first, last, age);
+            } else { //add member to previously created household
+                households.get(isHousehold).addMember(first,last,age);
                 //add member to household here.
             }
 

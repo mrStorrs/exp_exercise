@@ -1,4 +1,3 @@
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 
 public class Household {
@@ -7,7 +6,7 @@ public class Household {
     private String state;
     private String city;
     private Boolean DEBUG;
-    private ArrayList<Member> members = new ArrayList<Member>();
+    private ArrayList<HouseholdMember> members = new ArrayList<HouseholdMember>();
 
     //this will hold the id of all instances of this class.
     private static ArrayList<String> instances = new ArrayList();
@@ -66,15 +65,23 @@ public class Household {
         return this.id;
     }
 
-    public ArrayList<Member> getMembers() {
+    public ArrayList<HouseholdMember> getPeople() {
         return members;
     }
 
-    public void setMembers(ArrayList<Member> members) {
-        this.members = members;
+    public void addMember(String firstName, String lastName, int age ) {
+        HouseholdMember memberObj = new HouseholdMember(this, firstName, lastName, age);
+        members.add(memberObj);
+
+        if(this.DEBUG){
+            System.out.println("Adding Household member: " + lastName + ", " + firstName + ". To household: " + this.id);
+        }
     }
 
     public static ArrayList<String> getInstances() {
         return instances;
+
     }
+
+
 }
