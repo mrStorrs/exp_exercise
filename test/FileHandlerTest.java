@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,5 +36,9 @@ class FileHandlerTest {
         FileHandler a = new FileHandler("./input/INPUT.txt", true);
         a.readFile();
         a.writeHouseholds();
+
+        ArrayList<String> test = new ArrayList<>();
+        test.add("a");
+        test.add("b");
     }
 }

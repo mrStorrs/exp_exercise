@@ -74,12 +74,12 @@ public class FileHandler {
             System.out.println("householdarr: " + householdArr);
 
             //set ids for construction of new household.
-//            String first = householdArr.get(0);
-//            String last = householdArr.get(1);
+            String first = householdArr.get(0);
+            String last = householdArr.get(1);
             String street = householdArr.get(2);
             String city = householdArr.get(3);
             String state = householdArr.get(4);
-//            String age = householdArr.get(5);
+            String age = householdArr.get(5);
 
 
             //move this to its own method later! creating id
@@ -88,13 +88,17 @@ public class FileHandler {
                     + city.replaceAll("\\p{Punct}", "").toLowerCase()
                     + street.replaceAll("\\W", "").toLowerCase();
 
-            //adding
-            if(!currentHouseholds.contains(id)){
+            int isHousehold = currentHouseholds.indexOf(id); //looking for household.
+            if(isHousehold == -1){ //no household found create a new one.
                 //dynamically add new household.
                 Household householdObj = new Household(street, city, state, id, this.DEBUG);
                 households.add(householdObj);
                 System.out.println("Creating new household: " + id);
 
+                //add member to household here
+
+            } else {
+                //add member to household here.
             }
 
 
