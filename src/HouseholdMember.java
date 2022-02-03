@@ -24,7 +24,7 @@ public class HouseholdMember {
                 members.put(id, this);
 
                 if(DEBUG){
-                    System.out.println("Adding Member: " + lastName + ", " + firstName + " to " + this.household.getId());
+                    System.out.println("*DEBUG* Adding Member: " + lastName + ", " + firstName + " to " + this.household.getId());
                 }
             }
         } catch (IllegalArgumentException e){
@@ -71,5 +71,9 @@ public class HouseholdMember {
     public String getMemberInfo() {
         String memberInfo = this.firstName + " " + this.lastName + ", Age: " + this.age;
         return memberInfo;
+    }
+
+    public static void clearMembers(){
+        members.clear();
     }
 }

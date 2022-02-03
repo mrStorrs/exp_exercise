@@ -1,6 +1,7 @@
 import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Household {
     private String id;
@@ -33,8 +34,7 @@ public class Household {
         households.put(id, this); //add this household to the hashmap holding all Household obj.
 
         if(DEBUG){
-            this.DEBUG = true;
-            System.out.println("Creating new household: " + id);
+            System.out.println("*DEBUG* Creating new household: " + id);
         }
     }
 
@@ -76,7 +76,7 @@ public class Household {
     public void addMember(String firstName, String lastName, int age, String id ) {
 
         if(this.DEBUG){
-            System.out.println("Attempting to add new member..");
+            System.out.println("*DEBUG* Attempting to add new member..");
         }
 
         HouseholdMember memberObj = new HouseholdMember(this, firstName, lastName, age, id, DEBUG);
@@ -101,7 +101,17 @@ public class Household {
         return address;
     }
 
+    public static void clearHouseholds(){
+        for(Map.Entry<String, Household> entry : households.entrySet()) {
+            String key = entry.getKey();
+//            Household value = entry.getValue();
+//            households.get(key).getMembers();
+            clearHouseholdMembers(households.get(key));
+        }
+        households.clear();
+    }
 
-
-
+    private static void clearHouseholdMembers(Household household){
+        household.members.clear();
+    }
 }

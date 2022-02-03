@@ -1,9 +1,7 @@
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileNotFoundException;
 
 public class GUI extends JFrame{
@@ -15,7 +13,7 @@ public class GUI extends JFrame{
     public void startGUI(){
         //Creating main frame to hold everything
         JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
         //Creating the main panel
@@ -67,7 +65,7 @@ public class GUI extends JFrame{
     private void debugGUI(){
         //Creating main frame to hold everything
         JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
         //Creating the main panel
@@ -91,18 +89,12 @@ public class GUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 DEBUG = true;
                 frame.dispose();
-//                JFileChooser fileChooser = new JFileChooser();
-//                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//                int option = fileChooser.showSaveDialog(frame);
-//                if(option == JFileChooser.APPROVE_OPTION) {
-//                    File file = fileChooser.getSelectedFile();
-//                    saveFilePath = file.getPath();
-//                }
                 try {
-                    saveFile(frame);
+                    Application.firstRuntime(howToSort, DEBUG);
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }
+                runAgain();
             }
         });
 
@@ -113,10 +105,11 @@ public class GUI extends JFrame{
                 DEBUG = false;
                 frame.dispose();
                 try {
-                    saveFile(frame);
+                    Application.firstRuntime(howToSort, DEBUG);
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }
+                runAgain();
             }
         });
 
@@ -131,15 +124,61 @@ public class GUI extends JFrame{
         frame.setVisible(true);
     }
 
-    public void saveFile(Frame frame) throws FileNotFoundException {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int option = fileChooser.showSaveDialog(frame);
-        if(option == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            saveFilePath = file.getPath();
+    private void runAgain(){
+        //Creating main frame to hold everything
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
 
-            Application.finalRuntime(howToSort, saveFilePath, DEBUG);
-        }
+        //Creating the main panel
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+
+        BoxLayout boxLayout= new BoxLayout(mainPanel, BoxLayout.Y_AXIS);
+        mainPanel.setLayout(boxLayout);
+
+        //creating  heading panel
+        JPanel sortHeading = new JPanel();
+        sortHeading.add(new JLabel("Would you like too run this again?"));
+        mainPanel.add(sortHeading);
+
+        //creating buttons panel
+        JPanel sortButtons = new JPanel();
+
+        JButton runAgainButton = new JButton("Yes");
+        runAgainButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DEBUG = true;
+                frame.dispose();
+                Application.repeatRuntime();
+            }
+        });
+
+        JButton dontRunAgainButton = new JButton("No");
+        dontRunAgainButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DEBUG = false;
+                frame.dispose();
+
+                System.exit(0);
+            }
+        });
+
+        sortButtons.add(runAgainButton);
+        sortButtons.add(dontRunAgainButton);
+
+        mainPanel.add(sortButtons);
+
+        //adding panels
+        frame.add(mainPanel);
+        frame.pack(); //this is what dynamically handle frame size.
+        frame.setVisible(true);
     }
+
+    private void closeOperation(){
+        System.exit(0);
+    }
+
 }
