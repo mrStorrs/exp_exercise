@@ -6,6 +6,7 @@ import java.io.PrintStream;
 
 public class ConsoleGUI {
     final JFrame frame = new JFrame();
+
     public ConsoleGUI() {
         JTextArea textArea = new JTextArea(24, 80);
         textArea.setBackground(Color.BLACK);
@@ -14,7 +15,7 @@ public class ConsoleGUI {
         JScrollPane scrollPane = new JScrollPane(textArea);
         System.setOut(new PrintStream(new OutputStream() {
             @Override
-            public void write(int b) throws IOException {
+            public void write(int b) {
                 textArea.append(String.valueOf((char) b));
             }
         }));
@@ -23,6 +24,7 @@ public class ConsoleGUI {
     public void init() {
         frame.pack();
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setWindowCenterRight();
     }
     public JFrame getFrame() {
