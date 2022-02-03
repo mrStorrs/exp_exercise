@@ -12,8 +12,8 @@ class FileHandlerTest {
 
     @BeforeAll
     public static void setUp(){
-        InputStream inputStream = Application.class.getResourceAsStream("INPUT.txt");
-        FileHandler a = new FileHandler(inputStream, true);
+        inputStream = Application.class.getResourceAsStream("INPUT.txt");
+        a = new FileHandler(inputStream, true);
     }
 
     @Test
