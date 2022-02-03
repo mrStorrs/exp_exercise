@@ -4,19 +4,12 @@ import java.util.*;
 
 public class FileHandler {
     private String path;
-    private int id;
-    private static int unique_id;
     private ArrayList<String> rawInput = new ArrayList<String>();
     private Boolean DEBUG;
 
-    public FileHandler(String path){
-        this.setPath(path);
-        this.DEBUG = false;
-    }
-
     public FileHandler(String path, Boolean DEBUG){
         this.setPath(path);
-        this.DEBUG = true;
+        this.DEBUG = DEBUG;
     }
 
     public void setPath(String path) {
@@ -27,14 +20,8 @@ public class FileHandler {
         return path;
     }
 
-    //creating a unique id for file.
-    private void setId(){
-        this.id = FileHandler.unique_id;
-        FileHandler.unique_id++;
-    }
-
     /**
-     * Logic for reading the file and then outputting each line item (househould)
+     * Logic for reading the file and then outputting each line item (household)
      * to an array that will hold all items.
      */
     public void readFile(){
@@ -46,15 +33,16 @@ public class FileHandler {
                 this.rawInput.add(data); //add the new line to our raw input
 
                 if(DEBUG){
-                    System.out.println("Adding raw-data: " + data);
+                    System.out.println("*DEBUG* Adding raw-data: " + data);
                 }
             }
             reader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("The file specified cannot be found.");
+            System.out.println("*ERROR* The file specified cannot be found.");
             e.printStackTrace();
         }
     }
+
     public ArrayList<String> getRawInput(){
         return this.rawInput;
     }
@@ -89,13 +77,13 @@ public class FileHandler {
             String state = householdArr.get(4);
             int age = Integer.parseInt(householdArr.get(5));
 
-            //move this to its own method later! creating id to check if household exists.
+            //creating id for household.
             String householdID =
                     state.replaceAll("\\p{Punct}", "").toLowerCase()
                     + city.replaceAll("\\p{Punct}", "").toLowerCase()
                     + street.replaceAll("\\W", "").toLowerCase();
 
-            //move this to its own method later! creating id to check if household exists.
+            //creating id for member.
             String memberID =
                     last.replaceAll("\\p{Punct}", "").toLowerCase()
                             + first.replaceAll("\\p{Punct}", "").toLowerCase()

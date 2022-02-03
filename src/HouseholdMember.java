@@ -67,4 +67,9 @@ public class HouseholdMember {
     public static HashMap<String, HouseholdMember> getMembers() {
         return members;
     }
+
+    public String getMemberInfo() {
+        String memberInfo = this.firstName + " " + this.lastName + ", Age: " + this.age;
+        return memberInfo;
+    }
 }

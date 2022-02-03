@@ -16,23 +16,21 @@ public class Household {
     private static HashMap<String, Household> households = new HashMap<String, Household>();
 
     /**
-     *
-     * @param street The street address of the household
-     * @param city the city the household resides in
-     * @param state the state the household resides in.
-     *
-     * @// TODO: 2/1/2022 add validation and input cleaning to id
-     *      (Street should be st, st should be st.) etc
+     * Constructor for Households
+     * @param street Street address of the household
+     * @param city  city of the household
+     * @param state state of the household
+     * @param id unique id for locating later
+     * @param DEBUG whether debug information should be displayed or not.
      */
-
     public Household(String street, String city, String state, String id, Boolean DEBUG){
         this.street = street;
         this.city = city;
         this.state = state;
         this.id = id;
+        this.DEBUG = DEBUG;
 
-//        instances.add(id);
-        households.put(id, this);
+        households.put(id, this); //add this household to the hashmap holding all Household obj.
 
         if(DEBUG){
             this.DEBUG = true;
@@ -68,6 +66,13 @@ public class Household {
         return this.id;
     }
 
+    /**
+     * This will both create a new HouseholdMember and then add it to this household.
+     * @param firstName first name of household member
+     * @param lastName last name of household member
+     * @param age age of household member
+     * @param id unique id for household member
+     */
     public void addMember(String firstName, String lastName, int age, String id ) {
 
         if(this.DEBUG){
@@ -85,6 +90,15 @@ public class Household {
 
     public static HashMap<String, Household> getHouseholds(){
         return households;
+    }
+
+    public String getAddress(){
+        String address = this.street + ", " + this.city + " " + this.state;
+        return address;
+    }
+    public String getInfo(){
+        String address = this.getAddress() + " --- Household Size: " + this.getMembers().size();
+        return address;
     }
 
 

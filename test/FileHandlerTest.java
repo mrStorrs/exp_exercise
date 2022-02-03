@@ -9,26 +9,22 @@ class FileHandlerTest {
 
     @org.junit.jupiter.api.Test
     void setPath() {
-        FileHandler a = new FileHandler("testpath");
+        FileHandler a = new FileHandler("testpath", true);
         a.setPath("new testpath");
         assertEquals("new testpath", a.getPath());
     }
 
     @org.junit.jupiter.api.Test
     void getPath() {
-        FileHandler a = new FileHandler("testpath");
+        FileHandler a = new FileHandler("testpath", true);
         assertEquals("testpath", a.getPath());
     }
 
     @org.junit.jupiter.api.Test
     void readFile() {
-        FileHandler a = new FileHandler("./input/test.txt");
+        FileHandler a = new FileHandler("./input/test.txt", true);
         a.readFile();
         assertEquals("HelloExpeditors", a.getRawInput().get(0));
-    }
-
-    @Test
-    void getRawInput() {
     }
 
     @Test
