@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -7,8 +6,6 @@ import java.io.FileNotFoundException;
 public class GUI extends JFrame{
     private String howToSort;
     private Boolean DEBUG;
-    private String saveFilePath;
-
 
     public void startGUI(){
         //Creating main frame to hold everything
@@ -176,9 +173,4 @@ public class GUI extends JFrame{
         frame.pack(); //this is what dynamically handle frame size.
         frame.setVisible(true);
     }
-
-    private void closeOperation(){
-        System.exit(0);
-    }
-
 }
