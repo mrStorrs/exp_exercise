@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Expeditors_Exam:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Expeditors_Exam_jar</output-path>
+    <root id="archive" name="Expeditors_Exam.jar">
+      <element id="module-output" name="Expeditors_Exam" />
+    </root>
+  </artifact>
+</component>
