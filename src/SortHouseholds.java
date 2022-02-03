@@ -27,7 +27,6 @@ public abstract class SortHouseholds {
      */
     public List<String> sortMembers(HashMap<String, HouseholdMember> members, int minimumAge, Boolean DEBUG){
         List<String> membersByKey = new ArrayList<>(members.keySet());
-        Collections.sort(membersByKey);
 
         //look for members that don't meet the age requirement and remove them.
         for(String member : membersByKey){
@@ -44,7 +43,10 @@ public abstract class SortHouseholds {
             System.out.println("*DEBUG* Sorted Members: " + membersByKey);
         }
 
-        return membersByKey;
+        //Sort members remaining after underaged have been removed.
+        List<String> cleanedMembers = new ArrayList<>(members.keySet());
+        Collections.sort(cleanedMembers);
+        return cleanedMembers;
     }
 
     /**
@@ -94,7 +96,6 @@ public abstract class SortHouseholds {
                 System.out.println(currentHousehold.getInfo());
             }
         }
-
         //sort members then display them.
         HashMap<String, HouseholdMember> members = HouseholdMember.getMembers();
         List<String> sortedMembers = sortMembers(members, minimumAge, DEBUG);
@@ -106,8 +107,6 @@ public abstract class SortHouseholds {
                         "\t" + memberObj.getMemberInfo()
                         + ", " + membersHouseholdObj.getAddress());
             }
-
         }
     }
-
 }
