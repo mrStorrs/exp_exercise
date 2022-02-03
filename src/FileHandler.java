@@ -1,43 +1,33 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
 public class FileHandler {
-    private String path;
-    private ArrayList<String> rawInput = new ArrayList<String>();
+    private InputStream input;
+    private ArrayList<String> rawInput = new ArrayList<>();
     private Boolean DEBUG;
 
-    public FileHandler(String path, Boolean DEBUG){
-        this.setPath(path);
+    public FileHandler(InputStream input, Boolean DEBUG){
+        this.input = input;
         this.DEBUG = DEBUG;
     }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
     /**
      * Logic for reading the file and then outputting each line item (household)
      * to an array that will hold all items.
      */
     public void readFile(){
         try {
-            File input = new File(this.path); //open file
-            Scanner reader = new Scanner(input); //ready scanner
-            while (reader.hasNextLine()) { //move through file.
-                String data = reader.nextLine();
-                this.rawInput.add(data); //add the new line to our raw input
+            BufferedReader reader = new BufferedReader(new InputStreamReader(this.input));
+            String line = reader.readLine();
+            while (line != null) { //move through file.
+                this.rawInput.add(line); //add the new line to our raw input
+                line = reader.readLine();
 
                 if(DEBUG){
-                    System.out.println("*DEBUG* Adding raw-data: " + data);
+                    System.out.println("*DEBUG* Adding raw-data: " + line);
                 }
             }
             reader.close();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             System.out.println("*ERROR* The file specified cannot be found.");
             e.printStackTrace();
         }
@@ -87,7 +77,7 @@ public class FileHandler {
             String memberID =
                     last.replaceAll("\\p{Punct}", "").toLowerCase()
                             + first.replaceAll("\\p{Punct}", "").toLowerCase()
-                            + Integer.toString(age);
+                            + age;
 
             //figure out if household exists, then act accordingly
             if(!households.containsKey(householdID)){ //no household found create a new one.
@@ -98,9 +88,6 @@ public class FileHandler {
             } else { //add member to outstanding household
                 households.get(householdID).addMember(first,last,age, memberID);
             }
-
-
         }
-
     }
 }
